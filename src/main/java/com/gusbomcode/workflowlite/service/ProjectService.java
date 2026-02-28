@@ -1,23 +1,21 @@
 package com.gusbomcode.workflowlite.service;
 
-import com.gusbomcode.workflowlite.api.dtos.requests.CreateProjectRequest;
-import com.gusbomcode.workflowlite.api.dtos.requests.ProjectStatusRequest;
-import com.gusbomcode.workflowlite.api.dtos.requests.UpdateProjectRequest;
-import com.gusbomcode.workflowlite.api.dtos.responses.ApiResponse;
-import com.gusbomcode.workflowlite.api.dtos.responses.GetAllProjectsResponse;
-import com.gusbomcode.workflowlite.api.dtos.responses.GetProjectResponse;
-import com.gusbomcode.workflowlite.api.dtos.responses.ProjectResponseDto;
-import com.gusbomcode.workflowlite.entities.Project;
+import com.gusbomcode.workflowlite.dtos.project.requests.CreateProject;
+import com.gusbomcode.workflowlite.dtos.project.requests.UpdateProjectStatus;
+import com.gusbomcode.workflowlite.dtos.project.requests.UpdateProject;
+import com.gusbomcode.workflowlite.dtos.project.responses.GetAllProjects;
+import com.gusbomcode.workflowlite.dtos.project.responses.GetProject;
+import com.gusbomcode.workflowlite.dtos.project.responses.ProjectResponse;
 
 public interface ProjectService {
 
-    ProjectResponseDto createProject(CreateProjectRequest request);
+    ProjectResponse createProject(CreateProject request);
 
-    ProjectResponseDto updateProject(UpdateProjectRequest request, long id);
+    ProjectResponse updateProject(UpdateProject request, long id);
 
-    GetProjectResponse getProject(long id);
+    GetProject getProject(long id);
 
-    GetAllProjectsResponse getAllProjects();
+    GetAllProjects getAllProjects();
 
-    ApiResponse updateStatus(long id, ProjectStatusRequest request);
+    ProjectResponse updateStatus(long id, UpdateProjectStatus request);
 }

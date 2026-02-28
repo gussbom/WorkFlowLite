@@ -1,4 +1,4 @@
-package com.gusbomcode.workflowlite.commons;
+package com.gusbomcode.workflowlite.exceptions.enums;
 
 import org.springframework.http.HttpStatus;
 
@@ -12,15 +12,19 @@ public enum ErrorCode {
     INVALID_TRANSITION(HttpStatus.BAD_REQUEST),
 
 
-    //    Authentication
+    //    Authentication Errors
     INVALID_BEARER_TOKEN(HttpStatus.UNAUTHORIZED),
 
-    //    Validation
+    //    Validation Errors
     VALIDATION_ERROR(HttpStatus.BAD_REQUEST),
 
     INVALID_REQUEST(HttpStatus.BAD_REQUEST),
-    INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR);
+    INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR),
 
+    //    Http Errors
+    METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED);
+
+    //    Database Errors
 
     private final HttpStatus status;
 

@@ -1,13 +1,12 @@
 package com.gusbomcode.workflowlite.mappers;
 
-import com.gusbomcode.workflowlite.api.dtos.requests.CreateProjectRequest;
-import com.gusbomcode.workflowlite.api.dtos.requests.ProjectStatusRequest;
-import com.gusbomcode.workflowlite.api.dtos.requests.UpdateProjectRequest;
-import com.gusbomcode.workflowlite.api.dtos.responses.ApiResponse;
-import com.gusbomcode.workflowlite.api.dtos.responses.GetProjectResponse;
-import com.gusbomcode.workflowlite.api.dtos.responses.ProjectResponseDto;
+import com.gusbomcode.workflowlite.dtos.project.requests.CreateProject;
+import com.gusbomcode.workflowlite.dtos.api.ApiResponse;
+import com.gusbomcode.workflowlite.dtos.project.responses.GetProject;
+import com.gusbomcode.workflowlite.dtos.project.responses.ProjectResponse;
 import com.gusbomcode.workflowlite.entities.Project;
 import com.gusbomcode.workflowlite.enums.ProjectStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -15,7 +14,7 @@ import java.time.Instant;
 @Component
 public class ProjectMapper {
 
-    public Project toProjectEntity(CreateProjectRequest request){
+    public Project toProjectEntity(CreateProject request){
         return Project.builder()
                 .name(request.name())
                 .description(request.description())
@@ -24,21 +23,27 @@ public class ProjectMapper {
                 .build();
     }
 
-    public ProjectResponseDto toProjectResponseDto(Project project){
-        return ProjectResponseDto.builder()
+    public ProjectResponse toProjectResponseDto(Project project){
+        return ProjectResponse.builder()
                 .id(String.valueOf(project.getId()))
-                .message("Project Created")
+                .updatedAt(String.valueOf(project.getUpdatedAt()))
+                .createdAt(String.valueOf(project.getCreatedAt()))
+                .name(project.getName())
+                .description(project.getDescription())
                 .build();
     }
 
-    public ProjectResponseDto toProjectResponseDto(UpdateProjectRequest request){
-        return ProjectResponseDto.builder()
-                .message("Project Updated")
+    public ApiResponse toApiResponse(ProjectResponse data, HttpStatus status, String message){
+        return ApiResponse.<ProjectResponse>builder()
+                .timestamp(Instant.now().toString())
+                .status(status.value())
+                .message(message)
+                .data(data)
                 .build();
     }
 
-    public GetProjectResponse toGetProjectResponse(Project project){
-        return GetProjectResponse.builder()
+    public GetProject toGetProjectResponse(Project project){
+        return GetProject.builder()
                 .id(String.valueOf(project.getId()))
                 .name(project.getName())
                 .description(project.getDescription())

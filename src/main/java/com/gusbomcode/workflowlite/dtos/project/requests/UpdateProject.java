@@ -1,9 +1,9 @@
-package com.gusbomcode.workflowlite.api.dtos.requests;
+package com.gusbomcode.workflowlite.dtos.project.requests;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record UpdateProjectRequest(
+public record UpdateProject(
         @NotNull
         @Size(max = 50, message="Max size(50) exceeded")
         String name,

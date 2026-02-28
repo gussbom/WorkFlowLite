@@ -1,10 +1,12 @@
-package com.gusbomcode.workflowlite.api.dtos.requests;
+package com.gusbomcode.workflowlite.dtos.project.requests;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
-public record CreateProjectRequest(
+@Builder
+public record CreateProject(
 
         @NotBlank(message="Project name is blank.")
         @Size(max = 50, message="Max size(50) exceeded")

@@ -1,4 +1,4 @@
-package com.gusbomcode.workflowlite.commons;
+package com.gusbomcode.workflowlite.dtos.api;
 
 import lombok.Builder;
 
