@@ -12,6 +12,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -36,6 +37,21 @@ public class GlobalExceptionHandler {
         log.info("Domain error at {}: {}", request.getRequestURI(), ex.getMessage());
 
         return new ResponseEntity<>(ApiResponse.error(error), errorCode.status());
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiResponse> handleEnumError(
+            MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
+
+        String str = ex.getName();
+        ApiError error = ApiError.builder()
+                .code(ErrorCode.INVALID_PARAMETER.code())
+                .message(ErrorCode.INVALID_PARAMETER.message() + str)
+                .status(ErrorCode.INVALID_PARAMETER.status().value())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.badRequest().body(ApiResponse.error(error));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

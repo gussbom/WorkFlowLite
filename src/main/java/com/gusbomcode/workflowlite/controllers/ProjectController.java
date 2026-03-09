@@ -1,12 +1,13 @@
 package com.gusbomcode.workflowlite.controllers;
 
 import com.gusbomcode.workflowlite.dtos.project.requests.CreateProject;
-import com.gusbomcode.workflowlite.dtos.project.requests.UpdateProjectStatus;
+import com.gusbomcode.workflowlite.dtos.project.requests.ProjectStatusDto;
 import com.gusbomcode.workflowlite.dtos.project.requests.UpdateProject;
 import com.gusbomcode.workflowlite.dtos.api.ApiResponse;
-import com.gusbomcode.workflowlite.dtos.project.responses.GetAllProjects;
+import com.gusbomcode.workflowlite.dtos.project.responses.ProjectsListResponse;
 import com.gusbomcode.workflowlite.dtos.project.responses.GetProject;
 import com.gusbomcode.workflowlite.dtos.project.responses.ProjectResponse;
+import com.gusbomcode.workflowlite.enums.ProjectStatus;
 import com.gusbomcode.workflowlite.service.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,22 +38,22 @@ public class ProjectController {
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/fetch/{id}")
     public ResponseEntity<ApiResponse> getProject(@PathVariable long id){
         GetProject response = projectService.getProject(id);
         ApiResponse apiResponse = ApiResponse.success(response);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/get-all")
-    public ResponseEntity<ApiResponse> getAllProjects(){
-        GetAllProjects response = projectService.getAllProjects();
+    @GetMapping("/fetch-all")
+    public ResponseEntity<ApiResponse> getAllProjects(@RequestParam(required = false) ProjectStatus status){
+        ProjectsListResponse response = projectService.getAllProjects(status);
         ApiResponse apiResponse = ApiResponse.success(response);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 
     @PostMapping("/{id}/status")
-    public ResponseEntity<ApiResponse> updateStatus(@PathVariable long id, @RequestBody UpdateProjectStatus request){
+    public ResponseEntity<ApiResponse> updateStatus(@PathVariable long id, @RequestBody ProjectStatusDto request){
         ProjectResponse response = projectService.updateStatus(id, request);
         ApiResponse apiResponse = ApiResponse.success(response);
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);

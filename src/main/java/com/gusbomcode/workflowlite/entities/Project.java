@@ -35,7 +35,7 @@ public class Project {
             throw new InvalidProjectStatusTransitionException();
         }
     }
-    public void activate(){
+    public void active(){
         if(this.status != ProjectStatus.DRAFT){
             throw new InvalidProjectStatusTransitionException();
         }
@@ -64,8 +64,17 @@ public class Project {
         if (this.status == ProjectStatus.CANCELLED) {
             throw new ProjectCompletedException();
         }
+
         if (!name.isBlank()) this.name = name;
         if (!description.isBlank()) this.description = description;
         this.updatedAt = Instant.now();
+    }
+
+//    todo: Resolve this method to update status alongside updateData, possibly merge both.
+    public void updateStatus(ProjectStatus status){
+        switch(status){
+            case COMPLETED -> throw new ProjectCompletedException();
+            case CANCELLED -> throw new ProjectCancelledException();
+        }
     }
 }
