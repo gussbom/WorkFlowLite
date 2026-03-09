@@ -39,9 +39,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     @Override
     public ProjectResponse updateProject(UpdateProject request, long id) {
+        checkIfNameIsUnique(request.name());
         Project project = findProject(id);
         project.updateData(request.name(), request.description());
-        checkIfNameIsUnique(request.name());
         Project savedProject = projectRepository.save(project);
         return projectMapper.toProjectResponseDto(savedProject);
     }
@@ -70,6 +70,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectResponse updateStatus(long id, UpdateProjectStatus request) {
         Project project = findProject(id);
         switch(request.status()){
+            case DRAFT -> project.draft();
             case ACTIVE -> project.activate();
             case COMPLETED -> project.completed();
             case CANCELLED -> project.cancelled();
@@ -80,14 +81,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     private Project findProject(long id){
         return projectRepository.findById(id)
-                .orElseThrow(()->new ProjectNotFoundException("Project Not Found."));
+                .orElseThrow(()->new ProjectNotFoundException());
     }
 
     private void checkIfNameIsUnique(String name){
         boolean NameIsNotUnique = projectRepository.existsByName(name);
         if(NameIsNotUnique){
-            throw new ProjectNameExistsException(
-                    "Project Name "+ name +" exists already.");
+            throw new ProjectNameExistsException();
         }
     }
 }

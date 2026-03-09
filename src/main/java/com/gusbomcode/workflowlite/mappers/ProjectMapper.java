@@ -33,15 +33,6 @@ public class ProjectMapper {
                 .build();
     }
 
-    public ApiResponse toApiResponse(ProjectResponse data, HttpStatus status, String message){
-        return ApiResponse.<ProjectResponse>builder()
-                .timestamp(Instant.now().toString())
-                .status(status.value())
-                .message(message)
-                .data(data)
-                .build();
-    }
-
     public GetProject toGetProjectResponse(Project project){
         return GetProject.builder()
                 .id(String.valueOf(project.getId()))

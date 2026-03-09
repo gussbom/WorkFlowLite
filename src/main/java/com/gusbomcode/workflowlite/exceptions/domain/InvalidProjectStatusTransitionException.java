@@ -3,7 +3,7 @@ package com.gusbomcode.workflowlite.exceptions.domain;
 import com.gusbomcode.workflowlite.exceptions.enums.ErrorCode;
 
 public class InvalidProjectStatusTransitionException extends DomainException {
-    public InvalidProjectStatusTransitionException(String message) {
-        super(ErrorCode.INVALID_TRANSITION, message);
+    public InvalidProjectStatusTransitionException() {
+        super(ErrorCode.INVALID_TRANSITION);
     }
 }

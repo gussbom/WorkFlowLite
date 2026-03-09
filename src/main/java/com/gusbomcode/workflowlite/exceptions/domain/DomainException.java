@@ -6,8 +6,7 @@ public abstract class DomainException extends RuntimeException{
 
   private final ErrorCode errorCode;
 
-  protected DomainException(ErrorCode errorCode, String message) {
-    super(message);
+  protected DomainException(ErrorCode errorCode) {
     this.errorCode = errorCode;
   }
 

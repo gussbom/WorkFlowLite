@@ -28,15 +28,22 @@ public class Project {
     private Instant createdAt;
     private Instant updatedAt;
 
+    public void draft(){
+        if (this.status == ProjectStatus.ACTIVE
+                || this.status == ProjectStatus.COMPLETED
+                || this.status == ProjectStatus.CANCELLED){
+            throw new InvalidProjectStatusTransitionException();
+        }
+    }
     public void activate(){
         if(this.status != ProjectStatus.DRAFT){
-            throw new InvalidProjectStatusTransitionException("Project status can only change from DRAFT to ACTIVE");
+            throw new InvalidProjectStatusTransitionException();
         }
         this.status = ProjectStatus.ACTIVE;
     }
     public void completed(){
         if(this.status != ProjectStatus.ACTIVE){
-            throw new InvalidProjectStatusTransitionException("Project status can only change from ACTIVE to COMPLETED");
+            throw new InvalidProjectStatusTransitionException();
         }
         this.status = ProjectStatus.COMPLETED;
     }
@@ -44,18 +51,18 @@ public class Project {
         if(this.status == ProjectStatus.DRAFT || this.status == ProjectStatus.ACTIVE){
         this.status = ProjectStatus.CANCELLED;
         }else if(this.status == ProjectStatus.COMPLETED){
-            throw new ProjectCompletedException("Project is COMPLETED already");
+            throw new ProjectCompletedException();
         }else{
-            throw new ProjectCancelledException("Project has already being cancelled");
+            throw new ProjectCancelledException();
         }
     }
 
     public void updateData(String name, String description){
         if (this.status == ProjectStatus.COMPLETED) {
-            throw new ProjectCompletedException("Completed project cannot be modified");
+            throw new ProjectCompletedException();
         }
         if (this.status == ProjectStatus.CANCELLED) {
-            throw new ProjectCompletedException("Project has been Cancelled");
+            throw new ProjectCompletedException();
         }
         if (!name.isBlank()) this.name = name;
         if (!description.isBlank()) this.description = description;

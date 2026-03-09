@@ -4,35 +4,42 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
 
-    PROJECT_ALREADY_EXISTS(HttpStatus.CONFLICT),
-    PROJECT_NOT_FOUND(HttpStatus.NOT_FOUND),
-    PROJECT_NAME_EXISTS(HttpStatus.CONFLICT),
-    PROJECT_COMPLETED_EXCEPTION(HttpStatus.BAD_REQUEST),
-    PROJECT_CANCELLED_EXCEPTION(HttpStatus.BAD_REQUEST),
-    INVALID_TRANSITION(HttpStatus.BAD_REQUEST),
+    PROJECT_ALREADY_EXISTS("PRJ_001","Project already exists",HttpStatus.CONFLICT),
+    PROJECT_NOT_FOUND("PRJ_002","Project not found",HttpStatus.NOT_FOUND),
+    PROJECT_NAME_EXISTS("PRJ_003","Project name already exists",HttpStatus.CONFLICT),
+    PROJECT_COMPLETED_EXCEPTION("PRJ_004","Project has been completed",HttpStatus.BAD_REQUEST),
+    PROJECT_CANCELLED_EXCEPTION("PRJ_005","Project Has been cancelled",HttpStatus.BAD_REQUEST),
+    INVALID_TRANSITION("PRJ_006","Invalid project transition",HttpStatus.BAD_REQUEST),
 
 
     //    Authentication Errors
-    INVALID_BEARER_TOKEN(HttpStatus.UNAUTHORIZED),
+    INVALID_BEARER_TOKEN("","",HttpStatus.UNAUTHORIZED),
 
     //    Validation Errors
-    VALIDATION_ERROR(HttpStatus.BAD_REQUEST),
+    VALIDATION_ERROR("VAL_001","Validation failed",HttpStatus.BAD_REQUEST),
 
-    INVALID_REQUEST(HttpStatus.BAD_REQUEST),
-    INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR),
+    //    Generic
+    INVALID_REQUEST("","",HttpStatus.BAD_REQUEST),
+    INTERNAL_ERROR("SYS_001","Internal server error",HttpStatus.INTERNAL_SERVER_ERROR),
 
     //    Http Errors
-    METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED);
+    METHOD_NOT_ALLOWED("","",HttpStatus.METHOD_NOT_ALLOWED);
 
     //    Database Errors
 
     private final HttpStatus status;
+    private final String message;
+    private final String code;
 
-    ErrorCode(HttpStatus status) {
+    ErrorCode(String code, String message, HttpStatus status) {
         this.status = status;
+        this.message = message;
+        this.code = code;
     }
 
-    public HttpStatus getStatus() {
+    public HttpStatus status() {
         return status;
     }
+    public String code() { return code;}
+    public String message() { return message; }
 }

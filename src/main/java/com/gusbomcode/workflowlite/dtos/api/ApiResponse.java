@@ -6,26 +6,35 @@ import java.time.Instant;
 
 @Builder
 public record ApiResponse<T>(
-        String message,
-        int status,
+        boolean success,
         String timestamp,
-        T data
+        T data,
+        ApiError apiError
 ) {
     public static <T> ApiResponse<T> success(T data) {
         return new ApiResponse<>(
-                "success",
-                200,
+                true,
                 Instant.now().toString(),
-                data
+                data,
+                null
         );
     }
 
     public static <T> ApiResponse<T> created(T data) {
         return new ApiResponse<>(
-                "created",
-                201,
+                true,
                 Instant.now().toString(),
-                data
+                data,
+                null
+        );
+    }
+
+    public static <T> ApiResponse<T> error(ApiError error){
+        return new ApiResponse<>(
+                false,
+                Instant.now().toString(),
+                null,
+                error
         );
     }
 }
