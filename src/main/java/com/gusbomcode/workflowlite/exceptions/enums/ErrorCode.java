@@ -11,6 +11,7 @@ public enum ErrorCode {
     PROJECT_CANCELLED_EXCEPTION("PRJ_005","Project Has been cancelled",HttpStatus.BAD_REQUEST),
     INVALID_TRANSITION("PRJ_006","Invalid project transition",HttpStatus.BAD_REQUEST),
     INVALID_PARAMETER("PRJ_007","Invalid parameter value for: ",HttpStatus.BAD_REQUEST),
+    INVALID_REQUEST_BODY("PRJ_008", "Invalid request data provided", HttpStatus.BAD_REQUEST),
 
 
     //    Authentication Errors

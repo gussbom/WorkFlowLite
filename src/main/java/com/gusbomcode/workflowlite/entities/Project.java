@@ -70,11 +70,12 @@ public class Project {
         this.updatedAt = Instant.now();
     }
 
-//    todo: Resolve this method to update status alongside updateData, possibly merge both.
     public void updateStatus(ProjectStatus status){
         switch(status){
-            case COMPLETED -> throw new ProjectCompletedException();
-            case CANCELLED -> throw new ProjectCancelledException();
+            case DRAFT -> this.draft();
+            case ACTIVE -> this.active();
+            case COMPLETED -> this.completed();
+            case CANCELLED -> this.cancelled();
         }
     }
 }

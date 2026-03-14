@@ -1,10 +1,9 @@
 package com.gusbomcode.workflowlite.service.impl;
 
+import com.gusbomcode.workflowlite.dtos.project.responses.PageableResponse;
 import com.gusbomcode.workflowlite.dtos.project.requests.CreateProject;
 import com.gusbomcode.workflowlite.dtos.project.requests.ProjectStatusDto;
 import com.gusbomcode.workflowlite.dtos.project.requests.UpdateProject;
-import com.gusbomcode.workflowlite.dtos.project.responses.ProjectsListResponse;
-import com.gusbomcode.workflowlite.dtos.project.responses.GetProject;
 import com.gusbomcode.workflowlite.dtos.project.responses.ProjectResponse;
 import com.gusbomcode.workflowlite.entities.Project;
 import com.gusbomcode.workflowlite.enums.ProjectStatus;
@@ -15,9 +14,11 @@ import com.gusbomcode.workflowlite.service.ProjectService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -34,43 +35,50 @@ public class ProjectServiceImpl implements ProjectService {
         checkIfNameIsUnique(request.name());
         Project project = projectMapper.toProjectEntity(request);
         Project savedProject = projectRepository.save(project);
-        return projectMapper.toProjectResponseDto(savedProject);
+        return projectMapper.toProjectResponse(savedProject);
     }
 
     @Transactional
     @Override
-    public ProjectResponse updateProject(UpdateProject request, long id) {
+    public String updateProject(UpdateProject request, long id) {
         checkIfNameIsUnique(request.name());
         Project project = findProject(id);
         project.updateData(request.name(), request.description());
 
-//        Todo: Work out a strategy to update status alongside.
-
-        Project savedProject = projectRepository.save(project);
-        return projectMapper.toProjectResponseDto(savedProject);
+        if(request.status() != null){
+            project.updateStatus(request.status());
+        }
+        projectRepository.save(project);
+        return "updated";
     }
 
     @Override
-    public GetProject getProject(long id) {
+    public ProjectResponse getProject(long id) {
         Project project = findProject(id);
-        return projectMapper.toGetProjectResponse(project);
+        return projectMapper.toProjectResponse(project);
     }
 
     @Override
-    public ProjectsListResponse getAllProjects(ProjectStatus status) {
-        List<GetProject> allFoundProjects = new ArrayList<>();
-        List<Project> allProjects;
+    public PageableResponse<ProjectResponse> getAllProjects(ProjectStatus status, int page, int size) {
+
+        Pageable pageable = PageRequest.of(page,size);
+        Page<Project> allProjects;
+
         if(status==null){
-            allProjects = projectRepository.findAll();
+            allProjects = projectRepository.findAll(pageable);
         }else{
-            allProjects = projectRepository.findAllByStatus(status);
+            allProjects = projectRepository.findAllByStatus(status, pageable);
         }
-        for(Project p: allProjects){
-            GetProject project = projectMapper.toGetProjectResponse(p);
-            allFoundProjects.add(project);
-        }
-        return ProjectsListResponse.builder()
-                .projectList(allFoundProjects)
+        Page<ProjectResponse> mappedPage = allProjects.map(projectMapper::toProjectResponse);
+        List<ProjectResponse> allFoundProjects = mappedPage.getContent();
+
+        return PageableResponse.<ProjectResponse>builder()
+                .content(allFoundProjects)
+                .last(allProjects.isLast())
+                .pageNo(allProjects.getNumber())
+                .pageSize(allProjects.getSize())
+                .totalElements(allProjects.getTotalElements())
+                .totalPages(allProjects.getTotalPages())
                 .build();
     }
 
@@ -85,7 +93,7 @@ public class ProjectServiceImpl implements ProjectService {
             case CANCELLED -> project.cancelled();
         }
         Project savedProject = projectRepository.save(project);
-        return projectMapper.toProjectResponseDto(savedProject);
+        return projectMapper.toProjectResponse(savedProject);
     }
 
     private Project findProject(long id){

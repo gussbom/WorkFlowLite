@@ -2,6 +2,10 @@ spring:
   application:
     name: WorkFlowLite
 
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true
+
   datasource:
     url: jdbc:postgresql://localhost:5342/workflowlite
     password: password

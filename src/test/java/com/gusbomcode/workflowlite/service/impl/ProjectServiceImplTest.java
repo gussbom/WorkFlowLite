@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -60,7 +59,7 @@ class ProjectServiceImplTest {
                 .name("WorkFlowLite")
                 .description("Description")
                 .createdAt(Instant.now().toString())
-                .updatedAt(Instant.now().toString())
+                .lastUpdatedAt(Instant.now().toString())
                 .build();
 
         createProjectRequest = CreateProject.builder()
@@ -82,7 +81,7 @@ class ProjectServiceImplTest {
         when(projectRepository.existsByName(anyString())).thenReturn(Boolean.FALSE);
         when(projectMapper.toProjectEntity(createProjectRequest)).thenReturn(project);
         when(projectRepository.save(project)).thenReturn(savedProject);
-        when(projectMapper.toProjectResponseDto(savedProject)).thenReturn(projectResponse);
+        when(projectMapper.toProjectResponse(savedProject)).thenReturn(projectResponse);
 
         ProjectResponse response = projectService.createProject(createProjectRequest);
 
@@ -92,7 +91,7 @@ class ProjectServiceImplTest {
         verify(projectRepository).existsByName("WorkFlowLite");
         verify(projectRepository).save(project);
         verify(projectMapper).toProjectEntity(createProjectRequest);
-        verify(projectMapper).toProjectResponseDto(savedProject);
+        verify(projectMapper).toProjectResponse(savedProject);
 
         ArgumentCaptor<Project> projectCaptor = ArgumentCaptor.forClass(Project.class);
 
@@ -116,8 +115,8 @@ class ProjectServiceImplTest {
     @Test
     void updateProject() {
 
-        when(projectRepository.existsByName(anyString())).thenReturn(false);
-        when(projectRepository.findById(anyLong())).thenReturn(Optional.of(project));
+//        when(projectRepository.existsByName(anyString())).thenReturn(false);
+//        when(projectRepository.findById(anyLong())).thenReturn(Optional.of(project));
 //        when((projectRepository.save(project)).
     }
 

@@ -6,9 +6,9 @@ services:
       POSTGRES_USER: gusbom
       POSTGRES_PASSWORD: password
       POSTGRES_DB: workflowlite
-      PGDATA: /data/postgres
+      PGDATA: /content/postgres
     volumes:
-      - db:/data/postgres
+      - db:/content/postgres
     ports:
       - "5342:5432"
     networks:
