@@ -1,13 +1,14 @@
 package com.gusbomcode.workflowlite.service.impl;
 
-import com.gusbomcode.workflowlite.dtos.project.requests.CreateProject;
-import com.gusbomcode.workflowlite.dtos.project.requests.UpdateProject;
-import com.gusbomcode.workflowlite.dtos.project.responses.ProjectResponse;
-import com.gusbomcode.workflowlite.entities.Project;
-import com.gusbomcode.workflowlite.enums.ProjectStatus;
-import com.gusbomcode.workflowlite.exceptions.domain.ProjectNameExistsException;
-import com.gusbomcode.workflowlite.mappers.ProjectMapper;
-import com.gusbomcode.workflowlite.repositories.ProjectRepository;
+import com.gusbomcode.workflowlite.project.dtos.requests.CreateProject;
+import com.gusbomcode.workflowlite.project.dtos.requests.UpdateProject;
+import com.gusbomcode.workflowlite.project.dtos.responses.ProjectResponse;
+import com.gusbomcode.workflowlite.project.entities.Project;
+import com.gusbomcode.workflowlite.project.enums.ProjectStatus;
+import com.gusbomcode.workflowlite.project.exceptions.ProjectNameExistsExceptionProject;
+import com.gusbomcode.workflowlite.project.mappers.ProjectMapper;
+import com.gusbomcode.workflowlite.project.repositories.ProjectRepository;
+import com.gusbomcode.workflowlite.project.service.impl.ProjectServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -106,7 +107,7 @@ class ProjectServiceImplTest {
     @Test
     void createProject_shouldThrowException_whenProjectNameExists(){
         when(projectRepository.existsByName(anyString())).thenReturn(true);
-        assertThrows(ProjectNameExistsException.class, ()-> {
+        assertThrows(ProjectNameExistsExceptionProject.class, ()-> {
             projectService.createProject(createProjectRequest);
         });
         verify(projectRepository, never()).save(any());
