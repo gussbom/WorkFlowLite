@@ -13,6 +13,7 @@ This project was built as a learning and portfolio exercise to showcase:
 
 🧱 Architecture
 The application follows a package-by-feature (modular monolith) structure:
+
 workflow-lite
  project
  * → api            # Controllers (HTTP layer)
