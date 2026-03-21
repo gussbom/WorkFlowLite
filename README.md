@@ -1,9 +1,9 @@
 WorkFlow Lite
-📌 Overview
+📌 Overview:
 WorkFlow Lite is a backend REST API built with Java and Spring Boot for managing projects.
 The project is intentionally scoped to a single domain (Project) and focuses on demonstrating clean architecture, domain-driven design principles, and production-grade backend practices.
 
-🎯 Purpose
+🎯 Purpose:
 This project was built as a learning and portfolio exercise to showcase:
 * Clean code structure
 * Separation of concerns
@@ -11,7 +11,7 @@ This project was built as a learning and portfolio exercise to showcase:
 * Robust validation and business rule enforcement
 * Consistent API error handling
 
-🧱 Architecture
+🧱 Architecture:
 The application follows a package-by-feature (modular monolith) structure:
 
 workflow-lite
@@ -28,7 +28,7 @@ workflow-lite
  * → api            # Standard API response models
  * → exception      # Global error handling
 
-🧠 Design Approach
+🧠 Design Approach:
 1. Feature-Based Modular Structure
 All logic related to a feature is grouped together, improving readability and scalability.
 
@@ -70,7 +70,8 @@ Project Management
 * Completed projects cannot be modified
 * Cancelled projects are deleted after a while
 
-❗ Error Handling
+❗ Error Handling:
+
 The application uses a centralized exception handling mechanism.
 All errors follow a consistent structure:
 
@@ -80,9 +81,11 @@ All errors follow a consistent structure:
  * "error": "BUSINESS_RULE_VIOLATION",
  * "message": "Project name already exists",
  * "path": "/api/projects"
+
 }
 
-🔁 Request Flow
+🔁 Request Flow:
+
 Client Request
    ↓
 Controller
@@ -95,7 +98,8 @@ Repository
    ↓
 Database
 
-🧪 Testing
+🧪 Testing:
+
 The project includes testing strategies for:
 * Domain logic (unit tests)
 * Application services (mock-based tests)
@@ -114,7 +118,7 @@ Planned enhancements include:
 * Hibernate
 * PostgreSQL (or compatible database)
 
-📌 Key Takeaway
+📌 Key Takeaway:
 
 This project is less about features and more about demonstrating how to build backend systems correctly using clean architecture and domain-driven principles.
 
