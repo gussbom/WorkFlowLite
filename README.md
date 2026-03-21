@@ -14,17 +14,17 @@ This project was built as a learning and portfolio exercise to showcase:
 🧱 Architecture
 The application follows a package-by-feature (modular monolith) structure:
 workflow-lite
- ├── project
- │    ├── api            # Controllers (HTTP layer)
- │    ├── application    # Use-case services (business orchestration)
- │    ├── domain         # Core business logic (entities & rules)
- │    ├── repository     # Data access layer
- │    ├── dto            # Request & response models
- │    └── mapper         # DTO ↔ Entity mapping
+ project
+ → api            # Controllers (HTTP layer)
+ → application    # Use-case services (business orchestration)
+ → domain         # Core business logic (entities & rules)
+ → repository     # Data access layer
+ → dto            # Request & response models
+ → mapper         # DTO ↔ Entity mapping
  │
- └── common
-      ├── api            # Standard API response models
-      └── exception      # Global error handling
+ commons
+ → api            # Standard API response models
+ → exception      # Global error handling
 
 🧠 Design Approach
 1. Feature-Based Modular Structure
