@@ -15,16 +15,16 @@ This project was built as a learning and portfolio exercise to showcase:
 The application follows a package-by-feature (modular monolith) structure:
 workflow-lite
  project
- → api            # Controllers (HTTP layer)
- → application    # Use-case services (business orchestration)
- → domain         # Core business logic (entities & rules)
- → repository     # Data access layer
- → dto            # Request & response models
- → mapper         # DTO ↔ Entity mapping
- │
+ * → api            # Controllers (HTTP layer)
+ * → application    # Use-case services (business orchestration)
+ * → domain         # Core business logic (entities & rules)
+ * → repository     # Data access layer
+ * → dto            # Request & response models
+ * → mapper         # DTO ↔ Entity mapping
+
  commons
- → api            # Standard API response models
- → exception      # Global error handling
+ * → api            # Standard API response models
+ * → exception      # Global error handling
 
 🧠 Design Approach
 1. Feature-Based Modular Structure
@@ -114,5 +114,5 @@ Planned enhancements include:
 📌 Key Takeaway
 This project is less about features and more about demonstrating how to build backend systems correctly using clean architecture and domain-driven principles.
 
-👤 Author
-Built by Augustine (Gusbom), a backend-focused software engineer passionate about clean architecture and scalable system design.
+👤 Author → Augustine (Gusbom)
+A backend-focused software engineer passionate about clean architecture and scalable system design.
