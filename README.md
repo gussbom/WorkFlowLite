@@ -15,6 +15,7 @@ This project was built as a learning and portfolio exercise to showcase:
 The application follows a package-by-feature (modular monolith) structure:
 
 workflow-lite
+ 
  project
  * → api            # Controllers (HTTP layer)
  * → application    # Use-case services (business orchestration)
@@ -72,12 +73,13 @@ Project Management
 ❗ Error Handling
 The application uses a centralized exception handling mechanism.
 All errors follow a consistent structure:
+
 {
-  "timestamp": "2026-01-01T12:00:00",
-  "status": 400,
-  "error": "BUSINESS_RULE_VIOLATION",
-  "message": "Project name already exists",
-  "path": "/api/projects"
+ * "timestamp": "2026-01-01T12:00:00",
+ * "status": 400,
+ * "error": "BUSINESS_RULE_VIOLATION",
+ * "message": "Project name already exists",
+ * "path": "/api/projects"
 }
 
 🔁 Request Flow
@@ -113,7 +115,9 @@ Planned enhancements include:
 * PostgreSQL (or compatible database)
 
 📌 Key Takeaway
+
 This project is less about features and more about demonstrating how to build backend systems correctly using clean architecture and domain-driven principles.
 
 👤 Author → Augustine (Gusbom)
+
 A backend-focused software engineer passionate about clean architecture and scalable system design.
